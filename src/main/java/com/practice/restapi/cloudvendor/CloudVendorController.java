@@ -14,13 +14,13 @@ public class CloudVendorController {
         this.cloudVendorService = cloudVendorService;
     }
 
-    @GetMapping("{vendorId}")
+    @GetMapping("vendorById/{vendorId}")
     public CloudVendor getCloudVendor(@PathVariable("vendorId") String vendorId){
         return cloudVendorService.getCloudVendor(vendorId);
     }
 
     //List
-    @GetMapping()
+    @GetMapping("allVendors")
     public List<CloudVendor> getAllCloudVendors(){
         return cloudVendorService.getAllCloudVendors();
     }
