@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgres://localhost:5432/cloud_vendor?useSSL=false
+    username: postgres
+    password: 1234
+
+#JPA settings
+  jpa.hibernate.ddl_auto: create
