@@ -30,4 +30,10 @@ public class CloudVendorController {
     public CloudVendor createCloudVendor(@RequestBody CloudVendor cloudVendor){
         return cloudVendorService.createCloudVendor(cloudVendor);
     }
+
+    //Update
+    @PutMapping
+    public CloudVendor updateCloudVendor(@RequestBody CloudVendor cloudVendor){
+        return cloudVendorService.updateCloudVendor(cloudVendor);
+    }
 }
