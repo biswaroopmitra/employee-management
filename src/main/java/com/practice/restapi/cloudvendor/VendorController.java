@@ -1,7 +1,9 @@
 package com.practice.restapi.cloudvendor;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
@@ -21,8 +23,8 @@ public class VendorController {
 
     //List
     @GetMapping("allVendors")
-    public List<Vendor> getAllVendors(){
-        return vendorService.getAllVendors();
+    public List<Vendor> getAllVendors(@PathVariable int pageNumber, @PathVariable int pageSize){
+        return vendorService.getAllVendors(PageRequest.of(pageNumber, pageSize));
     }
 
     //Create

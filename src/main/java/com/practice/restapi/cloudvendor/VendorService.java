@@ -1,5 +1,7 @@
 package com.practice.restapi.cloudvendor;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +33,7 @@ public class VendorService {
         vendorRepository.deleteById(vendorId);
     }
 
-    public List<Vendor> getAllVendors(){
-        return vendorRepository.findAll();
+    public List<Vendor> getAllVendors(Pageable pageable){
+        return vendorRepository.findAll(pageable).getContent();
     }
 }
