@@ -2,20 +2,19 @@ package com.practice.restapi.cloudvendor;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-public class CloudVendor {
+public class Vendor {
     @Id
     String vendorId;
     String vendorName;
     String vendorAddress;
     String vendorMobileNumber;
 
-    public CloudVendor() {
+    public Vendor() {
     }
 
-    public CloudVendor(String vendorId, String vendorName, String vendorAddress, String vendorMobileNumber) {
+    public Vendor(String vendorId, String vendorName, String vendorAddress, String vendorMobileNumber) {
         this.vendorId = vendorId;
         this.vendorName = vendorName;
         this.vendorAddress = vendorAddress;
