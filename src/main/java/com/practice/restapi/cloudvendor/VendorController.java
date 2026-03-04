@@ -1,6 +1,7 @@
 package com.practice.restapi.cloudvendor;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
@@ -23,8 +24,14 @@ public class VendorController {
 
     //List
     @GetMapping("allVendors")
-    public List<Vendor> getAllVendors(@PathVariable int pageNumber, @PathVariable int pageSize){
-        return vendorService.getAllVendors(PageRequest.of(pageNumber, pageSize));
+    public List<Vendor> getAllVendors(@PathVariable int pageNumber, @PathVariable int pageSize, String sortDirection, String sortColumn){
+        Sort sort = null;
+        if(sortDirection.equalsIgnoreCase("ASC")){
+            sort = Sort.by(sortColumn).ascending();
+        } else {
+            sort = Sort.by(sortColumn).descending();
+        }
+        return vendorService.getAllVendors(PageRequest.of(pageNumber, pageSize, sort));
     }
 
     //Create
