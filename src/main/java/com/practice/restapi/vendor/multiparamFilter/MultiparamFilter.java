@@ -22,8 +22,8 @@ public class MultiparamFilter {
 
                 List<Predicate> list = new ArrayList<>();
 
-                list.add(criteriaBuilder.like(root.get("vendorName"), search));
-                list.add(criteriaBuilder.like(root.get("vendorMobileNumber"), search));
+                list.add(criteriaBuilder.equal(root.get("vendorName"), search));
+                list.add(criteriaBuilder.equal(root.get("vendorMobileNumber"), search));
 
                 return criteriaBuilder.and(list.toArray(new Predicate[0]));
             };

@@ -1,6 +1,8 @@
 package com.practice.restapi.vendor;
 
+import com.practice.restapi.vendor.multiparamFilter.MultiparamFilter;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +34,9 @@ public class VendorService {
         vendorRepository.deleteById(vendorId);
     }
 
-    public List<Vendor> getAllVendors(Pageable pageable){
-        return vendorRepository.findAll(pageable).getContent();
+    public List<Vendor> getAllVendors(Pageable pageable, String search){
+        Specification<Vendor> specification = MultiparamFilter.getSpecification(search);
+
+        return vendorRepository.findAll(specification, pageable).getContent();
     }
 }
