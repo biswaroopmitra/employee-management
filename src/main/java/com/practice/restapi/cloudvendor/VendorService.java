@@ -23,11 +23,11 @@ public class VendorService {
         return vendor;
     }
 
-    public Vendor getVendor(String vendorId){
+    public Vendor getVendor(long vendorId){
         return vendorRepository.findById(vendorId).get();
     }
 
-    public void deleteVendor(String vendorId){
+    public void deleteVendor(long vendorId){
         vendorRepository.deleteById(vendorId);
     }
 
