@@ -1,4 +1,4 @@
-package com.practice.restapi.cloudvendor;
+package com.practice.restapi.vendor;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

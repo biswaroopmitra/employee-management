@@ -1,10 +1,9 @@
-package com.practice.restapi.cloudvendor;
+package com.practice.restapi.vendor;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController

@@ -1,6 +1,5 @@
-package com.practice.restapi.cloudvendor;
+package com.practice.restapi.vendor;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

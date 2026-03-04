@@ -1,4 +1,4 @@
-package com.practice.restapi.cloudvendor;
+package com.practice.restapi.vendor;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
