@@ -12,11 +12,8 @@ public class VendorService {
 
     VendorRepository vendorRepository;
 
-    VendorPaginationRepository vendorPaginationRepository;
-
-    public VendorService(VendorRepository vendorRepository, VendorPaginationRepository vendorPaginationRepository) {
+    public VendorService(VendorRepository vendorRepository) {
         this.vendorRepository = vendorRepository;
-        this.vendorPaginationRepository = vendorPaginationRepository;
     }
 
     public Vendor createVendor(Vendor vendor){
