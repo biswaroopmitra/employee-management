@@ -23,20 +23,8 @@ public class VendorController {
 
     //List
     @GetMapping("allVendors")
-    public List<Vendor> getAllVendors(@RequestParam(required = false) int pageNumber,
-                                      @RequestParam(required = false) int pageSize,
-                                      @RequestParam(required = false, defaultValue = "ASC") String sortDirection,
-                                      @RequestParam(required = false, defaultValue = "vendorId") String sortColumn,
-                                      @RequestParam(required = false)String search){
-        Sort sort = null;
-        if(sortDirection!=null) {
-            if (sortDirection.equalsIgnoreCase("ASC")) {
-                sort = Sort.by(sortColumn).ascending();
-            } else {
-                sort = Sort.by(sortColumn).descending();
-            }
-        }
-        return vendorService.getAllVendors(PageRequest.of(pageNumber, pageSize, sort), search);
+    public List<Vendor> getAllVendors(@RequestParam int pageNumber, @RequestParam int pageSize){
+        return vendorService.getAllVendors(pageNumber, pageSize);
     }
 
     //Create
