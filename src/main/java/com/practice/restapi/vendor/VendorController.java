@@ -1,9 +1,14 @@
 package com.practice.restapi.vendor;
 
+import com.practice.restapi.exceptions.ErrorResponse;
+import com.practice.restapi.exceptions.VendorNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,8 +22,8 @@ public class VendorController {
     }
 
     @GetMapping("vendorById/{vendorId}")
-    public Vendor getVendor(@PathVariable("vendorId") long vendorId){
-        return vendorService.getVendor(vendorId);
+    public ResponseEntity<?> getVendor(@PathVariable("vendorId") long vendorId){
+        return vendorService.getVendorById(vendorId);
     }
 
     //List
@@ -37,5 +42,11 @@ public class VendorController {
     @PutMapping
     public Vendor updateVendor(@RequestBody Vendor vendor){
         return vendorService.updateVendor(vendor);
+    }
+
+    @ExceptionHandler(VendorNotFoundException.class)
+    public ResponseEntity<?> handlingVendorNotFound(VendorNotFoundException exception){
+        ErrorResponse vendorNotFound = new ErrorResponse(LocalDateTime.now(), exception.getMessage(), "Vendor not found.");
+        return new ResponseEntity<>(vendorNotFound, HttpStatus.NOT_FOUND);
     }
 }
