@@ -22,6 +22,7 @@ public class VendorController {
     }
 
     @GetMapping("vendorById/{vendorId}")
+    @ResponseBody
     public ResponseEntity<?> getVendor(@PathVariable("vendorId") long vendorId){
         return vendorService.getVendorById(vendorId);
     }
