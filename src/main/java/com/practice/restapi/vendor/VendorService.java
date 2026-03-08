@@ -1,9 +1,15 @@
 package com.practice.restapi.vendor;
 
 import com.practice.restapi.employee.Employee;
+import com.practice.restapi.exceptions.ErrorResponse;
+import com.practice.restapi.exceptions.VendorNotFoundException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,8 +32,11 @@ public class VendorService {
         return vendor;
     }
 
-    public Vendor getVendor(long vendorId){
-        return vendorRepository.findById(vendorId).get();
+    public ResponseEntity<?> getVendorById(long vendorId){
+        Vendor vendor = vendorRepository.findById(vendorId)
+                                        .orElseThrow(() -> new VendorNotFoundException("Vendor not found with ID"));
+
+        return ResponseEntity.ok(vendor);
     }
 
     public void deleteVendor(long vendorId){
