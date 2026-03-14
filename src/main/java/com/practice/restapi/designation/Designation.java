@@ -1,11 +1,12 @@
-package com.practice.restapi.department;
+package com.practice.restapi.designation;
 
 import com.practice.restapi.baseEntity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 
-@Entity
-public class Department extends BaseEntity {
+import java.time.LocalDate;
+
+public class Designation extends BaseEntity {
 
     @NotNull(message = "name is required.")
     @Column(nullable = false)
@@ -14,6 +15,13 @@ public class Department extends BaseEntity {
     @NotNull(message = "code is required.")
     @Column(nullable = false)
     String code;
+
+    @NotNull(message = "from date is required.")
+    @Column(nullable = false)
+    LocalDate fromDate;
+
+    @Column(nullable = true)
+    LocalDate toDate;
 
     @NotNull(message = "active is required.")
     @Column(nullable = false)
