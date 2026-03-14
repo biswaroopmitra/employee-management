@@ -1,8 +1,10 @@
 package com.practice.restapi.employee;
 
 import com.practice.restapi.baseEntity.BaseEntity;
+import com.practice.restapi.city.City;
 import com.practice.restapi.department.Department;
 import com.practice.restapi.designation.Designation;
+import com.practice.restapi.zipcode.Zipcode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -57,4 +59,12 @@ public class Employee extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", nullable = false)
     Department department;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = true)
+    City city;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "zipcode_id", nullable = true)
+    Zipcode zipcode;
 }
