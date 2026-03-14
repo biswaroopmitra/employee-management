@@ -2,10 +2,12 @@ package com.practice.restapi.designation;
 
 import com.practice.restapi.baseEntity.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
+@Entity
 public class Designation extends BaseEntity {
 
     @NotNull(message = "name is required.")
