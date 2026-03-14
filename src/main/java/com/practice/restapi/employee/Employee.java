@@ -1,53 +1,70 @@
 package com.practice.restapi.employee;
 
-import jakarta.persistence.Entity;
+import com.practice.restapi.baseEntity.BaseEntity;
+import com.practice.restapi.city.City;
+import com.practice.restapi.department.Department;
+import com.practice.restapi.designation.Designation;
+import com.practice.restapi.zipcode.Zipcode;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 
-public class Employee {
-    String name;
-    int age;
-    String department;
+@Entity
+public class Employee extends BaseEntity {
+
+    @NotNull(message = "name is required.")
+    @Column(nullable = false)
+    String firstName;
+
+    @NotNull(message = "name is required.")
+    @Column(nullable = false)
+    String lastName;
+
+    @NotNull(message = "employeeCode is required.")
+    @Column(nullable = false)
+    String employeeCode;
+
+    @NotNull(message = "email is required.")
+    @Column(nullable = false)
+    String email;
+
+    @Column(nullable = true)
+    String mobileNumber;
+
+    @NotNull(message = "date of birth is required.")
+    @Column(nullable = false)
+    LocalDate dateOfBirth;
+
+    @NotNull(message = "date of joining org is required.")
+    @Column(nullable = false)
+    LocalDate dateOfJoiningOrg;
+
+    @NotNull(message = "salary is required.")
+    @Column(nullable = false)
     double salary;
 
-    public Employee() {
-    }
+    @NotNull(message = "status is required.")
+    @Enumerated(EnumType.STRING)
+    EmployeeStatus employeeStatus;
 
-    public Employee(String name, int age, String department, double salary) {
-        this.name = name;
-        this.age = age;
-        this.department = department;
-        this.salary = salary;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reporting_manager_id", nullable = true)
+    Employee reportingManager;
 
-    public String getName() {
-        return name;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "designation_id", nullable = false)
+    Designation designation;
 
-    public int getAge() {
-        return age;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", nullable = false)
+    Department department;
 
-    public String getDepartment() {
-        return department;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = true)
+    City city;
 
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "zipcode_id", nullable = true)
+    Zipcode zipcode;
 }
