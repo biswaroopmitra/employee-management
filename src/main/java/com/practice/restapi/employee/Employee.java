@@ -29,13 +29,13 @@ public class Employee extends BaseEntity {
 
     @NotNull(message = "employeeCode is required.")
     @NotBlank(message = "employeeCode is required.")
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     String employeeCode;
 
-    @Column(nullable = true)
+    @Column(unique = true, nullable = true)
     String email;
 
-    @Column(nullable = true)
+    @Column(unique = true, nullable = true)
     String mobileNumber;
 
     @NotNull(message = "date of birth is required.")
