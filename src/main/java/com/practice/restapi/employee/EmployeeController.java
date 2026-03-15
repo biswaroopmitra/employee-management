@@ -33,14 +33,14 @@ public class EmployeeController {
     }
 
     //Create
-    @PostMapping
+    @PostMapping("addEmployee")
     public Employee createEmployee(@RequestBody @NotNull Employee employee){
 
         return employeeService.createEmployee(employee);
     }
 
     //Update
-    @PutMapping
+    @PutMapping("updateEmployee")
     public Employee updateEmployee(@RequestBody Employee employee){
         return employeeService.updateEmployee(employee);
     }

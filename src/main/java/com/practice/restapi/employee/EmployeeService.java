@@ -58,7 +58,7 @@ public class EmployeeService {
 
         if(employee.reportingManager != null){
             employee.reportingManager = employeeRepository.findById(employee.reportingManager.getId())
-                                        .orElseThrow(() -> new NotFoundException("Zipcode not found"));
+                                        .orElseThrow(() -> new NotFoundException("reportingManager not found"));
         }
 
         Employee newEmployee = new Employee();
