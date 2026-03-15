@@ -18,4 +18,37 @@ public class State extends BaseEntity {
     @NotNull(message = "active is required.")
     @Column(nullable = false)
     Boolean active;
+
+    public State() {
+    }
+
+    public State(String name, String code, Boolean active) {
+        this.name = name;
+        this.code = code;
+        this.active = active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
