@@ -13,9 +13,42 @@ public class Zipcode extends BaseEntity {
 
     @NotNull(message = "code is required.")
     @Column(nullable = false)
-    String code;
+    String zipcode;
 
     @NotNull(message = "active is required.")
     @Column(nullable = false)
     Boolean active;
+
+    public Zipcode() {
+    }
+
+    public Zipcode(String name, String zipcode, Boolean active) {
+        this.name = name;
+        this.zipcode = zipcode;
+        this.active = active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

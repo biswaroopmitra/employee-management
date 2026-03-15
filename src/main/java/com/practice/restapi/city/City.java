@@ -23,4 +23,46 @@ public class City extends BaseEntity {
     @NotNull(message = "active is required.")
     @Column(nullable = false)
     Boolean active;
+
+    public City() {
+    }
+
+    public City(String name, String code, State state, Boolean active) {
+        this.name = name;
+        this.code = code;
+        this.state = state;
+        this.active = active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
