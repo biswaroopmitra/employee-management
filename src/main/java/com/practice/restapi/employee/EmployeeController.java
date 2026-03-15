@@ -1,7 +1,8 @@
 package com.practice.restapi.employee;
 
-import com.practice.restapi.exceptions.EmployeeNotFoundException;
 import com.practice.restapi.exceptions.ErrorResponse;
+import com.practice.restapi.exceptions.NotFoundException;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,8 @@ public class EmployeeController {
 
     //Create
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee){
+    public Employee createEmployee(@RequestBody @NotNull Employee employee){
+
         return employeeService.createEmployee(employee);
     }
 
@@ -43,8 +45,8 @@ public class EmployeeController {
         return employeeService.updateEmployee(employee);
     }
 
-    @ExceptionHandler(EmployeeNotFoundException.class)
-    public ResponseEntity<?> handlingVendorNotFound(EmployeeNotFoundException exception){
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<?> handlingVendorNotFound(NotFoundException exception){
         ErrorResponse employeeNotFound = new ErrorResponse(LocalDateTime.now(), exception.getMessage(), "Employee not found.");
         return new ResponseEntity<>(employeeNotFound, HttpStatus.NOT_FOUND);
     }

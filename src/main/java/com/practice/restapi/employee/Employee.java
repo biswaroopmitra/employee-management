@@ -6,27 +6,33 @@ import com.practice.restapi.department.Department;
 import com.practice.restapi.designation.Designation;
 import com.practice.restapi.zipcode.Zipcode;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 public class Employee extends BaseEntity {
 
-    @NotNull(message = "name is required.")
+    @NotNull(message = "firstName is required.")
+    @NotBlank(message = "firstName is required.")
     @Column(nullable = false)
     String firstName;
 
-    @NotNull(message = "name is required.")
+    @NotNull(message = "lastName is required.")
+    @NotBlank(message = "lastName is required.")
     @Column(nullable = false)
     String lastName;
 
     @NotNull(message = "employeeCode is required.")
+    @NotBlank(message = "employeeCode is required.")
     @Column(nullable = false)
     String employeeCode;
 
-    @NotNull(message = "email is required.")
-    @Column(nullable = false)
+    @Column(nullable = true)
     String email;
 
     @Column(nullable = true)
@@ -41,6 +47,7 @@ public class Employee extends BaseEntity {
     LocalDate dateOfJoiningOrg;
 
     @NotNull(message = "salary is required.")
+    @Positive(message = "Salary must be a positive number")
     @Column(nullable = false)
     double salary;
 
