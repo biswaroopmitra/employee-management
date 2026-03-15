@@ -1,13 +1,9 @@
 package com.practice.restapi.employee;
 
-import com.practice.restapi.city.City;
 import com.practice.restapi.city.CityRepository;
-import com.practice.restapi.department.Department;
 import com.practice.restapi.department.DepartmentRepository;
-import com.practice.restapi.designation.Designation;
 import com.practice.restapi.designation.DesignationRepository;
 import com.practice.restapi.exceptions.NotFoundException;
-import com.practice.restapi.zipcode.Zipcode;
 import com.practice.restapi.zipcode.ZipcodeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.PageRequest;
