@@ -39,27 +39,26 @@ public class EmployeeService {
 
     @Transactional
     public Employee createEmployee(Employee employee){
-        Department department = departmentRepository.findById(employee.department.getId())
+        employee.department = departmentRepository.findById(employee.department.getId())
                                                     .orElseThrow(() -> new NotFoundException("Department not found"));
 
-        Designation designation = designationRepository.findById(employee.designation.getId())
+        employee.designation = designationRepository.findById(employee.designation.getId())
                                     .orElseThrow(() -> new NotFoundException("Designation not found"));
 
-        City city = cityRepository.findById(employee.city.getId())
+        employee.city = cityRepository.findById(employee.city.getId())
                                     .orElseThrow(() -> new NotFoundException("City not found"));
 
         if(employee.zipcode.getZipcode() != null && !employee.zipcode.getZipcode().isBlank()){
-            Zipcode zipcode = zipcodeRepository.findByZipcode(employee.zipcode.getZipcode())
+            employee.zipcode = zipcodeRepository.findByZipcode(employee.zipcode.getZipcode())
                                                 .orElseThrow(() -> new NotFoundException("Zipcode not found"));
         } else {
-            Zipcode zipcode = zipcodeRepository.findById(employee.zipcode.getId())
+            employee.zipcode = zipcodeRepository.findById(employee.zipcode.getId())
                                 .orElseThrow(() -> new NotFoundException("Zipcode not found"));
         }
 
         if(employee.reportingManager != null){
             employee.reportingManager = employeeRepository.findById(employee.reportingManager.getId())
                                         .orElseThrow(() -> new NotFoundException("Zipcode not found"));
-
         }
 
         Employee newEmployee = new Employee();
