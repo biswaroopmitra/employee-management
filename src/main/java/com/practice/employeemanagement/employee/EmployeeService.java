@@ -33,7 +33,6 @@ public class EmployeeService {
         this.zipcodeRepository = zipcodeRepository;
     }
 
-    @Transactional
     public Employee createEmployee(Employee employee){
         employee.department = departmentRepository.findById(employee.department.getId())
                                                     .orElseThrow(() -> new NotFoundException("Department not found"));
