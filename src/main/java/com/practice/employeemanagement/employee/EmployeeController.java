@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
@@ -30,6 +32,11 @@ public class EmployeeController {
     @GetMapping("allEmployees")
     public List<Employee> getAllEmployees(@RequestParam int pageNumber, @RequestParam int pageSize){
         return employeeService.getAllEmployees(pageNumber, pageSize);
+    }
+
+    @GetMapping("secondHighestPaidEmployeeByDepartments")
+    public Map<String, Optional<Employee>> getGroupedEmployees(@RequestParam int pageNumber, @RequestParam int pageSize){
+        return employeeService.getGroupedEmployees(pageNumber, pageSize);
     }
 
     //Create

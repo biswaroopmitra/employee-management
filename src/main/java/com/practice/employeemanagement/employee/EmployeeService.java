@@ -10,7 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -117,6 +121,19 @@ public class EmployeeService {
         segregatedEmployees.get(false).forEach(employee -> System.out.println(employee.getName()));
         */
         return employees;
+    }
+
+    public Map<String, Optional<Employee>> getGroupedEmployees(int pageNumber, int pageSize){
+        List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+
+        Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
+                                                    employee -> employee.getDepartment().getName(),
+                                                        Collectors.collectingAndThen(Collectors.toList(),
+                                                                employeeList -> employeeList.stream()
+                                                                                                .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
+                                                                                                .skip(1)
+                                                                                                .findFirst())));
+        return groupedEmployees;
     }
 
     private Boolean stringInvalid(String stringValue){
