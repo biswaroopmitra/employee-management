@@ -1,6 +1,6 @@
 package com.practice.employeemanagement.state;
 
-import com.practice.employeemanagement.baseEntity.BaseEntity;
+import com.practice.vendormanagement.baseEntity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;

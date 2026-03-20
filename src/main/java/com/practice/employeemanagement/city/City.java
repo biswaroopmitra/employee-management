@@ -1,7 +1,7 @@
 package com.practice.employeemanagement.city;
 
-import com.practice.employeemanagement.baseEntity.BaseEntity;
-import com.practice.employeemanagement.state.State;
+import com.practice.vendormanagement.baseEntity.BaseEntity;
+import com.practice.vendormanagement.state.State;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
