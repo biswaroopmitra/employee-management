@@ -4,6 +4,9 @@ import com.practice.employeemanagement.city.CityRepository;
 import com.practice.employeemanagement.department.DepartmentRepository;
 import com.practice.employeemanagement.designation.DesignationRepository;
 import com.practice.employeemanagement.exceptions.NotFoundException;
+import com.practice.employeemanagement.paginationfiltersort.GenericSpecification;
+import com.practice.employeemanagement.paginationfiltersort.SearchCriteria;
+import com.practice.employeemanagement.util.Constants;
 import com.practice.employeemanagement.zipcode.ZipcodeRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
@@ -129,7 +132,7 @@ public class EmployeeService {
     }
 
     @CircuitBreaker(name = "employeeService", fallbackMethod = "getGroupedEmployeesFallback")
-    public Map<String, Optional<Employee>> getGroupedEmployees(int pageNumber, int pageSize){
+    public Map<String, Optional<Employee>> getGroupedEmployees(Map<String, String> allParams, int pageNumber, int pageSize){
         List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
 
         Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
@@ -142,10 +145,43 @@ public class EmployeeService {
         return groupedEmployees;
     }
 
-    public Map<String, Optional<Employee>> getGroupedEmployeesFallback(int pageNumber, int pageSize, Throwable throwable){
+    public Map<String, Optional<Employee>> getGroupedEmployeesFallback(Map<String, String> allParams, int pageNumber, int pageSize, Throwable throwable){
         logger.error("Circuit is open  or call failed. Error: {}", throwable.getMessage());
 
-        List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+        GenericSpecification<Employee> spec = new GenericSpecification<>();
+
+        allParams.forEach((key, value) -> {
+            //if (!key.equals("page") && !key.equals("size") && !key.equals("sort")) {
+            //}
+            if(key != null && !key.isBlank()) {
+                if(key.equals("id")) {
+                    spec.add(new SearchCriteria(key, Constants.EQUALITY_SEARCH, value));
+                }
+
+                if(key.equals("firstName")) {
+                    spec.add(new SearchCriteria(key, Constants.CASE_INSENSITIVE_SEARCH, value));
+                }
+
+                if(key.equals("lastName")) {
+                    spec.add(new SearchCriteria(key, Constants.CASE_INSENSITIVE_SEARCH, value));
+                }
+
+                if(key.equals("code")) {
+                    spec.add(new SearchCriteria(key, Constants.CASE_INSENSITIVE_SEARCH, value));
+                }
+
+                if(key.equals("email")) {
+                    spec.add(new SearchCriteria(key, Constants.EQUALITY_SEARCH, value));
+                }
+
+                if(key.equals("mobileNumber")) {
+                    spec.add(new SearchCriteria(key, Constants.EQUALITY_SEARCH, value));
+                }
+            }
+        });
+
+        //return productRepository.findAll(spec, pageable);
+        List<Employee> employees = employeeRepository.findAll(spec, PageRequest.of(pageNumber, pageSize)).getContent();
 
         Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
                                                             employee -> employee.getDepartment().getName(),

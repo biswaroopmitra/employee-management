@@ -35,8 +35,8 @@ public class EmployeeController {
     }
 
     @GetMapping("secondHighestPaidEmployeeByDepartments")
-    public Map<String, Optional<Employee>> getGroupedEmployees(@RequestParam int pageNumber, @RequestParam int pageSize){
-        return employeeService.getGroupedEmployees(pageNumber, pageSize);
+    public Map<String, Optional<Employee>> getGroupedEmployees(@RequestParam Map<String, String> allParams, @RequestParam int pageNumber, @RequestParam int pageSize){
+        return employeeService.getGroupedEmployees(allParams, pageNumber, pageSize);
     }
 
     //Create
