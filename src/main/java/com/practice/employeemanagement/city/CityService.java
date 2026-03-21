@@ -1,7 +1,7 @@
 package com.practice.employeemanagement.city;
 
-import com.practice.vendormanagement.exceptions.NotFoundException;
-import com.practice.vendormanagement.state.StateRepository;
+import com.practice.employeemanagement.exceptions.NotFoundException;
+import com.practice.employeemanagement.state.StateRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
