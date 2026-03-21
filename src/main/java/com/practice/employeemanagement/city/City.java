@@ -15,7 +15,7 @@ public class City extends BaseEntity {
 
     @NotNull(message = "code is required.")
     @NotBlank(message = "code is required.")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String code;
 
     @ManyToOne(fetch = FetchType.LAZY)
