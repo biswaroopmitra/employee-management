@@ -5,7 +5,10 @@ import com.practice.employeemanagement.department.DepartmentRepository;
 import com.practice.employeemanagement.designation.DesignationRepository;
 import com.practice.employeemanagement.exceptions.NotFoundException;
 import com.practice.employeemanagement.zipcode.ZipcodeRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
     EmployeeRepository employeeRepository;
     DepartmentRepository departmentRepository;
@@ -123,6 +128,7 @@ public class EmployeeService {
         return employees;
     }
 
+    @CircuitBreaker(name = "employeeService", fallbackMethod = "getGroupedEmployeesFallback")
     public Map<String, Optional<Employee>> getGroupedEmployees(int pageNumber, int pageSize){
         List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
 
@@ -133,6 +139,19 @@ public class EmployeeService {
                                                                                                 .sorted(Comparator.comparingDouble(Employee::getSalary).reversed())
                                                                                                 .skip(1)
                                                                                                 .findFirst())));
+        return groupedEmployees;
+    }
+
+    public Map<String, Optional<Employee>> getGroupedEmployeesFallback(int pageNumber, int pageSize, Throwable throwable){
+        logger.error("Circuit is open  or call failed. Error: {}", throwable.getMessage());
+
+        List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+
+        Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
+                                                            employee -> employee.getDepartment().getName(),
+                                                            Collectors.collectingAndThen(Collectors.toList(),
+                                                                    employeeList -> employeeList.stream()
+                                                                                                    .max(Comparator.comparingDouble(Employee::getSalary)))));
         return groupedEmployees;
     }
 

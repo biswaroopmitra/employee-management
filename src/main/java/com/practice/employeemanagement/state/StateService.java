@@ -1,6 +1,6 @@
 package com.practice.employeemanagement.state;
 
-import com.practice.vendormanagement.exceptions.NotFoundException;
+import com.practice.employeemanagement.exceptions.NotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

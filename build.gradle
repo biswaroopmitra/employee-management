@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.0.3'
+	id 'org.springframework.boot' version '3.4.0'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -20,8 +20,17 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// 1. Bill of Materials (BOM) - Ensures version alignment
+	implementation(platform("io.github.resilience4j:resilience4j-bom:2.2.0"))
+	// 2. Resilience4j Starter for Spring Boot 3
+	implementation("io.github.resilience4j:resilience4j-spring-boot3")
+	// 3. AOP - Mandatory for @CircuitBreaker annotation to work
+	implementation("org.springframework.boot:spring-boot-starter-aop")
+	// 4. Actuator - For production monitoring and health checks
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'

@@ -14,3 +14,27 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      employeeService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10              # Look at last 10 calls
+        failureRateThreshold: 50           # Trip if 5/10 fail
+        waitDurationInOpenState: 10000ms   # Stay Open for 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+
+# Actuator configuration to expose the circuit health
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics
+  endpoint:
+    health:
+      show-details: always
