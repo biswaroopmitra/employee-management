@@ -8,10 +8,9 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Zipcode extends BaseEntity {
-    @NotNull(message = "name is required.")
-    @NotBlank(message = "name is required.")
-    @Column(nullable = false)
-    String name;
+
+    @Column(nullable = true)
+    String areaName;
 
     @NotNull(message = "code is required.")
     @NotBlank(message = "code is required.")
@@ -25,18 +24,18 @@ public class Zipcode extends BaseEntity {
     public Zipcode() {
     }
 
-    public Zipcode(String name, String zipcode, Boolean active) {
-        this.name = name;
+    public Zipcode(String areaName, String zipcode, Boolean active) {
+        this.areaName = areaName;
         this.zipcode = zipcode;
         this.active = active;
     }
 
-    public String getName() {
-        return name;
+    public String getAreaName() {
+        return areaName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
     public String getZipcode() {

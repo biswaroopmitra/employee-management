@@ -5,5 +5,5 @@ public enum EmployeeStatus {
     CONTRACT,
     PERMANENT,
     NOTICE_PERIOD,
-    EXITED
+    EXIT
 }
