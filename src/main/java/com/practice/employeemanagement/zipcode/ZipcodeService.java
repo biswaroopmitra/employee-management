@@ -19,7 +19,7 @@ public class ZipcodeService {
     }
 
     public Zipcode createZipcode(Zipcode zipcode){
-        if(stringInvalid(zipcode.name)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid name.");
+        if(stringInvalid(zipcode.areaName)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid areaName.");
 
         if(stringInvalid(zipcode.zipcode)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid code.");
 
@@ -48,8 +48,8 @@ public class ZipcodeService {
     public Zipcode updateZipcode(Zipcode zipcode){
         Zipcode zipcodeToUpdate = zipcodeRepository.findById(zipcode.getId()).orElseThrow(() -> new NotFoundException("Zipcode not found with ID."));
 
-        if(zipcode.name != null) {
-            if(zipcode.name.isBlank()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid name.");
+        if(zipcode.areaName != null) {
+            if(zipcode.areaName.isBlank()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid areaName.");
         }
 
         if(zipcode.zipcode != null) {
@@ -61,7 +61,7 @@ public class ZipcodeService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid active value.");
         }
 
-        zipcodeToUpdate.setName(zipcode.getName());
+        zipcodeToUpdate.setAreaName(zipcode.getAreaName());
         zipcodeToUpdate.setZipcode(zipcode.getZipcode());
         zipcodeToUpdate.setActive(zipcode.getActive());
 
