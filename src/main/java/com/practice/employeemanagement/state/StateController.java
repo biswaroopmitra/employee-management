@@ -1,12 +1,13 @@
 package com.practice.employeemanagement.state;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/state")
 public class StateController {
 
@@ -16,9 +17,9 @@ public class StateController {
         this.stateService = stateService;
     }
 
-    @PostMapping("createState")
-    public State createState(State state){
-        return stateService.createState(state);
+    @PostMapping("addState")
+    public State addState(@RequestBody @NotNull State state){
+        return stateService.addState(state);
     }
 
     @GetMapping("stateById/{stateId}")

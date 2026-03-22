@@ -18,7 +18,7 @@ public class StateService {
         this.stateRepository = stateRepository;
     }
 
-    public State createState(State state){
+    public State addState(State state){
         if(stringInvalid(state.name)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid name.");
 
         if(stringInvalid(state.code)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid code.");
