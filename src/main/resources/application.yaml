@@ -20,12 +20,12 @@ spring:
   flyway:
     enabled: true
     locations:
-      - classpath:database/migration
+      - classpath:database/migrations
     default-schema: public
     baseline-on-migrate: true
 
-  logging:
-    level:
+logging:
+  level:
       org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor: DEBUG
 
 resilience4j:
