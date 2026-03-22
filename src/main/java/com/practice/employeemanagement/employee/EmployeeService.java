@@ -45,7 +45,7 @@ public class EmployeeService {
         this.zipcodeRepository = zipcodeRepository;
     }
 
-    public Employee createEmployee(Employee employee){
+    public Employee addEmployee(Employee employee){
         employee.department = departmentRepository.findById(employee.department.getId())
                                                     .orElseThrow(() -> new NotFoundException("Department not found"));
 
@@ -68,20 +68,8 @@ public class EmployeeService {
                                         .orElseThrow(() -> new NotFoundException("reportingManager not found"));
         }
 
-        Employee newEmployee = new Employee();
-        employee.setFirstName(employee.getFirstName());
-        employee.setLastName(employee.getLastName());
-        employee.setEmployeeCode(employee.getEmployeeCode());
-        employee.setDateOfBirth(employee.getDateOfBirth());
-        employee.setEmployeeStatus(employee.getEmployeeStatus());
-        employee.setCity(employee.getCity());
-        employee.setDepartment(employee.getDepartment());
-        employee.setDesignation(employee.getDesignation());
-        employee.setZipcode(employee.getZipcode());
-        employee.setSalary(employee.getSalary());
 
-        employeeRepository.saveAndFlush(employee);
-        return employee;
+        return employeeRepository.saveAndFlush(employee);
     }
 
     public Employee updateEmployee(Employee employee){

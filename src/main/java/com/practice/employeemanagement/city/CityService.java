@@ -21,7 +21,7 @@ public class CityService {
         this.stateRepository = stateRepository;
     }
 
-    public City createCity(City city){
+    public City addCity(City city){
         if(stringInvalid(city.name)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid name.");
 
         if(stringInvalid(city.code)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid code.");

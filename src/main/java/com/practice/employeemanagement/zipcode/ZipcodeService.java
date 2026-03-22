@@ -18,7 +18,7 @@ public class ZipcodeService {
         this.zipcodeRepository = zipcodeRepository;
     }
 
-    public Zipcode createZipcode(Zipcode zipcode){
+    public Zipcode addZipcode(Zipcode zipcode){
         if(stringInvalid(zipcode.areaName)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid areaName.");
 
         if(stringInvalid(zipcode.zipcode)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid code.");

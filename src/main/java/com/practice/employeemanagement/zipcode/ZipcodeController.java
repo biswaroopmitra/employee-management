@@ -1,12 +1,13 @@
 package com.practice.employeemanagement.zipcode;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/zipcode")
 public class ZipcodeController {
 
@@ -16,9 +17,9 @@ public class ZipcodeController {
         this.zipcodeService = zipcodeService;
     }
 
-    @PostMapping("createZipcode")
-    public Zipcode createZipcode(Zipcode zipcode){
-        return zipcodeService.createZipcode(zipcode);
+    @PostMapping("addZipcode")
+    public Zipcode addZipcode(@RequestBody @NotNull Zipcode zipcode){
+        return zipcodeService.addZipcode(zipcode);
     }
 
     @GetMapping("zipcodeById/{zipcodeId}")

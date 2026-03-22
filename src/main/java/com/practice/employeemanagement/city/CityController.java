@@ -1,12 +1,13 @@
 package com.practice.employeemanagement.city;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/city")
 public class CityController {
 
@@ -16,9 +17,9 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @PostMapping("createCity")
-    public City createCity(City city){
-        return cityService.createCity(city);
+    @PostMapping("addCity")
+    public City addCity(@RequestBody @NotNull City city){
+        return cityService.addCity(city);
     }
 
     @GetMapping("cityById/{cityId}")
