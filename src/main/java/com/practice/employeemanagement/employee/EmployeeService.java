@@ -9,17 +9,14 @@ import com.practice.employeemanagement.paginationfiltersort.SearchCriteria;
 import com.practice.employeemanagement.util.Constants;
 import com.practice.employeemanagement.zipcode.ZipcodeRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -120,6 +117,7 @@ public class EmployeeService {
     }
 
     @CircuitBreaker(name = "employeeService", fallbackMethod = "getGroupedEmployeesFallback")
+    @Transactional(readOnly = true)
     public Map<String, Optional<Employee>> getGroupedEmployees(Map<String, String> allParams, int pageNumber, int pageSize){
         List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
 
@@ -169,7 +167,7 @@ public class EmployeeService {
         });
 
         //return productRepository.findAll(spec, pageable);
-        List<Employee> employees = employeeRepository.findAll(spec, PageRequest.of(pageNumber, pageSize)).getContent();
+        List<Employee> employees = new ArrayList<>();//employeeRepository.findAll(spec, PageRequest.of(pageNumber, pageSize)).getContent();
 
         Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
                                                             employee -> employee.getDepartment().getName(),
