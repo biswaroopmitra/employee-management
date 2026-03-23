@@ -24,10 +24,6 @@ spring:
     default-schema: public
     baseline-on-migrate: true
 
-  jackson:
-    serialization:
-      fail-on-empty-beans: false
-
 logging:
   level:
       org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor: DEBUG

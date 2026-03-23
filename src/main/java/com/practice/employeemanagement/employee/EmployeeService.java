@@ -50,17 +50,17 @@ public class EmployeeService {
                                                     .orElseThrow(() -> new NotFoundException("Department not found"));
 
         employee.designation = designationRepository.findById(employee.designation.getId())
-                                    .orElseThrow(() -> new NotFoundException("Designation not found"));
+                                                    .orElseThrow(() -> new NotFoundException("Designation not found"));
 
-        employee.city = cityRepository.findById(employee.city.getId())
-                                    .orElseThrow(() -> new NotFoundException("City not found"));
+        employee.city = cityRepository.findByIdWithState(employee.city.getId())
+                                        .orElseThrow(() -> new NotFoundException("City not found"));
 
         if(employee.zipcode.getZipcode() != null && !employee.zipcode.getZipcode().isBlank()){
             employee.zipcode = zipcodeRepository.findByZipcode(employee.zipcode.getZipcode())
                                                 .orElseThrow(() -> new NotFoundException("Zipcode not found"));
         } else {
             employee.zipcode = zipcodeRepository.findById(employee.zipcode.getId())
-                                .orElseThrow(() -> new NotFoundException("Zipcode not found"));
+                                                .orElseThrow(() -> new NotFoundException("Zipcode not found"));
         }
 
         if(employee.reportingManager != null){
