@@ -11,6 +11,7 @@ import com.practice.employeemanagement.zipcode.ZipcodeRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -86,7 +87,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployees(int pageNumber, int pageSize){
-        List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+        Page<Long> employeeIds = employeeRepository.findEmployeeIds(PageRequest.of(pageNumber, pageSize));//.getContent();
 
         /*List<Employee> employees = Arrays.asList(
                 new Employee("Employee1", 24, "Dept1", 12000),
@@ -113,13 +114,54 @@ public class EmployeeService {
         System.out.println("Employees with sal below 12000");
         segregatedEmployees.get(false).forEach(employee -> System.out.println(employee.getName()));
         */
+
+        if(employeeIds.isEmpty()){
+            return new ArrayList<Employee>();
+        }
+
+        List<Employee> employees = employeeRepository.findByIdIn(employeeIds.getContent());
+
         return employees;
     }
 
     @CircuitBreaker(name = "employeeService", fallbackMethod = "getGroupedEmployeesFallback")
     @Transactional(readOnly = true)
     public Map<String, Optional<Employee>> getGroupedEmployees(Map<String, String> allParams, int pageNumber, int pageSize){
-        List<Employee> employees = employeeRepository.findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+        GenericSpecification<Employee> spec = new GenericSpecification<>();
+
+        allParams.forEach((key, value) -> {
+            //if (!key.equals("page") && !key.equals("size") && !key.equals("sort")) {
+            //}
+            if(key != null && !key.isBlank()) {
+                if(key.equals("id")) {
+                    spec.add(new SearchCriteria(key, Constants.EQUALITY_SEARCH, value));
+                }
+
+                if(key.equals("firstName")) {
+                    spec.add(new SearchCriteria(key, Constants.CASE_INSENSITIVE_SEARCH, value));
+                }
+
+                if(key.equals("lastName")) {
+                    spec.add(new SearchCriteria(key, Constants.CASE_INSENSITIVE_SEARCH, value));
+                }
+
+                if(key.equals("code")) {
+                    spec.add(new SearchCriteria(key, Constants.CASE_INSENSITIVE_SEARCH, value));
+                }
+
+                if(key.equals("email")) {
+                    spec.add(new SearchCriteria(key, Constants.EQUALITY_SEARCH, value));
+                }
+
+                if(key.equals("mobileNumber")) {
+                    spec.add(new SearchCriteria(key, Constants.EQUALITY_SEARCH, value));
+                }
+            }
+        });
+
+        Page<Long> employeeIds = employeeRepository.findEmployeeIdsPaginated(spec, PageRequest.of(pageNumber, pageSize));
+
+        List<Employee> employees = employeeRepository.findByIdIn(employeeIds.getContent());
 
         Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
                                                     employee -> employee.getDepartment().getName(),
@@ -166,7 +208,7 @@ public class EmployeeService {
             }
         });
 
-        //return productRepository.findAll(spec, pageable);
+        //return productRepository.findEmployeeIdsPaginated(spec, pageable);
         List<Employee> employees = new ArrayList<>();//employeeRepository.findAll(spec, PageRequest.of(pageNumber, pageSize)).getContent();
 
         Map<String, Optional<Employee>> groupedEmployees = employees.stream().collect(Collectors.groupingBy(
