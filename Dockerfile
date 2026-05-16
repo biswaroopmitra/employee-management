@@ -1,6 +1,6 @@
 #Use the official OpenJDK 21 image from Docker Hub
 #FROM openjdk:21
-FROM public.ecr.aws/amazoncorretto/amazoncorretto:21-alpine-jdk
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:21-alpine
 #Set working directory inside the container
 WORKDIR /app
 #Copy the compiled Java app JAR file into the container
